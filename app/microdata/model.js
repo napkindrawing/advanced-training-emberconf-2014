@@ -1,10 +1,10 @@
 var model = Ember.Object.extend({
 	init: function() {
-		this.set('$dataChanges', {});
+		this.set('$changes', {});
 	},
 
 	$mergeChanges: function() {
-		var changes = this.get('$dataChanges');
+		var changes = this.get('$changes');
 		for(var changed in changes) {
 			this.get('$data')[changed] = changes[changed];
 		}

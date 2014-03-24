@@ -1,11 +1,11 @@
 export default function() {
     return function(key,value) {
 		if(arguments.length == 1) {
-			var changed = this.get('$dataChanges')[key];
+			var changed = this.get('$changes')[key];
 
 			return (typeof changed === 'undefined') ? this.$data[key] : changed;
 		} else {
-			this.get('$dataChanges')[key] = value;
+			this.get('$changes')[key] = value;
 			return value;
 		}
     }.property()

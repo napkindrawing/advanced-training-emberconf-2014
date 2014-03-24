@@ -1,15 +1,21 @@
+function normalizeKey(key) {
+	return key.toString();
+}
+
 function buildRecord(type, data, store) {
 
 	var containerKey = 'model:' + type;
 
 	var factory = store.container.lookupFactory(containerKey);
 
+	var id = normalizeKey(data.id);
+
+	data.id = id;
+
 	var record = factory.create({
-		id: data.id,
+		id: id,
 		$data: data
 	});
-
-	var id = data.id;
 
 	identityMapForType(type, store)[id] = record;
 
@@ -41,6 +47,7 @@ var store = Ember.Object.extend({
 	},
 
 	getById: function getById(type, id) {
+		var id = normalizeKey(id);
 		var identityMap = identityMapForType(type, this);
 		return identityMap[id] || null;
 	}
