@@ -1,25 +1,48 @@
-var data = {
-};
+function buildRecord(type, data, store) {
+
+	var containerKey = 'model:' + type;
+
+	var factory = store.container.lookupFactory(containerKey);
+
+	var record = factory.create({
+		id: data.id,
+		$data: data
+	});
+
+	var id = data.id;
+
+	identityMapForType(type, store)[id] = record;
+
+	return record;
+}
+
+function identityMapForType(type, store) {
+	var typeIdentityMap = store.get('identityMap');
+	var idIdentityMap = typeIdentityMap[type] || {};
+	typeIdentityMap[type] = idIdentityMap;
+	return idIdentityMap;
+}
 
 var store = Ember.Object.extend({
+	init: function() {
+		this.set('identityMap', {});
+	},
 	push: function push(type, attrs) {
 
-		data[type] = data[type] || {};
+		var record = this.getById(type, attrs.id);
 
-		if(data[type][attrs.id]) {
-			data[type][attrs.id].set('$data', attrs);
+		if(record) {
+			record.set('$data', attrs);
 		} else {
-
-			var type_class = this.container.lookupFactory('model:' + type);
-			var instance = type_class.create({ id: attrs.id, $data: attrs });
-
-			data[type][attrs.id] = instance;
+			record = buildRecord(type, attrs, this);
 		}
 
-		return data[type][attrs.id];
+		return record;
 	},
+
 	getById: function getById(type, id) {
-		return data[type][id];
+		var identityMap = identityMapForType(type, this);
+		return identityMap[id] || null;
 	}
 });
 
