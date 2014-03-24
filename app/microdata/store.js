@@ -14,7 +14,9 @@ function buildRecord(type, data, store) {
 
 	var record = factory.create({
 		id: id,
-		$data: data
+		$data: data,
+		$type: type,
+		$store: store
 	});
 
 	identityMapForType(type, store)[id] = record;
@@ -59,6 +61,10 @@ var store = Ember.Object.extend({
 		});
 
 		return promise;
+	},
+
+	save: function(type, model) {
+		console.log("store.save");
 	}
 	
 });

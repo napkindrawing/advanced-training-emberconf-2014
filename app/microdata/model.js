@@ -8,6 +8,11 @@ var model = Ember.Object.extend({
 		for(var changed in changes) {
 			this.get('$data')[changed] = changes[changed];
 		}
+	},
+
+	save: function save() {
+		console.log("model.save");
+		this.get('$store').save(this.get('$type'), this);
 	}
 });
 
