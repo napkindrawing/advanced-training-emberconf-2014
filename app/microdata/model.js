@@ -1,1 +1,3 @@
-export default Ember.Object.extend();
+var model = Ember.Object.extend();
+
+export default model;
