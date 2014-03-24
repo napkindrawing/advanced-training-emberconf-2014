@@ -8,6 +8,7 @@ var model = Ember.Object.extend({
 		for(var changed in changes) {
 			this.get('$data')[changed] = changes[changed];
 		}
+		this.set('$changes', {});
 	},
 
 	save: function save() {
