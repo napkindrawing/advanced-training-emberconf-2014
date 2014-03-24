@@ -53,8 +53,9 @@ var store = Ember.Object.extend({
 	},
 
 	find: function find(type, id) {
+		var store = this;
 		var promise = new Ember.RSVP.Promise(function (resolve, reject) {
-			resolve( this.getById(type, id) );
+			resolve( store.getById(type, id) );
 		});
 
 		return promise;
