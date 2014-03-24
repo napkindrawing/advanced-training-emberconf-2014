@@ -50,7 +50,16 @@ var store = Ember.Object.extend({
 		var id = normalizeKey(id);
 		var identityMap = identityMapForType(type, this);
 		return identityMap[id] || null;
+	},
+
+	find: function find(type, id) {
+		var promise = new Ember.RSVP.Promise(function (resolve, reject) {
+			resolve( this.getById(type, id) );
+		});
+
+		return promise;
 	}
+	
 });
 
 export default store;
