@@ -1,1 +1,2 @@
-export default Ember.Object.extend();
+export default function() {
+};
